@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Foguete PET</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="cabecalho">
+        <div class="conteudo-cabecalho">
+            <h1>Simulador de Foguete PET</h1>
+            <p class="subtitulo">Física, pressão e programação em um experimento real</p>
+        </div>
+    </header>
+
+    <main class="conteudo-principal">
+        <!-- PAINEL DE CONTROLE / ENTRADAS -->
+        <section class="cartao painel-controle">
+            <h2>Parametros de Lançamento</h2>
+            <form id="formulario-simulacao">
+                <div class="grupo-entrada">
+                    <label for="angulo">Ângulo de Lançamento (°)</label>
+                    <input type="number" id="angulo" name="angulo" min="15" max="80" value="45" required>
+                    <small>Valores permitidos: 15° a 80°</small>
+                </div>
+
+                <div class="grupo-entrada">
+                    <label for="pressao">Pressão Manométrica (bar)</label>
+                    <input type="number" id="pressao" name="pressao" min="0.5" max="6" step="0.1" value="3.0" required>
+                    <small>Pressão de ar da bomba manual (ex: 1.0 a 5.0 bar)</small>
+                </div>
+
+                <div class="grupo-botoes">
+                    <button type="submit" id="btn-simular" class="btn btn-primario">🚀 Simular Lançamento</button>
+                    <button type="button" id="btn-limpar" class="btn btn-secundario">🔄 Reiniciar</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- RESULTADOS DA SIMULAÇÃO -->
+        <section class="cartao resultados">
+            <h2>Resultados do Lançamento</h2>
+            <div class="grade-resultados">
+                <div class="cartao-metrica">
+                    <span class="rotulo-metrica">Alcance Horizontal</span>
+                    <span class="valor-metrica" id="res-alcance">0.0 <small>m</small></span>
+                </div>
+                <div class="cartao-metrica">
+                    <span class="rotulo-metrica">Altura Máxima</span>
+                    <span class="valor-metrica" id="res-altura">0.0 <small>m</small></span>
+                </div>
+                <div class="cartao-metrica">
+                    <span class="rotulo-metrica">Tempo de Voo</span>
+                    <span class="valor-metrica" id="res-tempo">0.0 <small>s</small></span>
+                </div>
+                <div class="cartao-metrica">
+                    <span class="rotulo-metrica">Velocidade Inicial Est.</span>
+                    <span class="valor-metrica" id="res-velocidade">0.0 <small>m/s</small></span>
+                </div>
+            </div>
+            <div class="alerta-estimativa">
+                ⚠️ <strong>Nota:</strong> Os valores calculados são estimativas teóricas aproximadas baseadas nos dados de pressão e ângulo informados.
+            </div>
+        </section>
+
+        <!-- GRÁFICO DA TRAJETÓRIA E ANIMAÇÃO -->
+        <section class="cartao secao-grafico">
+            <h2>Trajetória do Lançamento</h2>
+            <div class="conteiner-canvas">
+                <canvas id="canvas-trajetoria" width="800" height="400"></canvas>
+            </div>
+            <div class="controles-animacao">
+                <button type="button" id="btn-animar" class="btn btn-acao" disabled>▶️ Iniciar Animação</button>
+            </div>
+        </section>
+
+        <!-- HISTÓRICO E COMPARAÇÃO -->
+        <section class="cartao historico">
+            <h2>Comparação de Lançamentos</h2>
+            <div class="tabela-responsiva">
+                <table id="tabela-historico">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Ângulo (°)</th>
+                            <th>Pressão (bar)</th>
+                            <th>Velocidade Est. (m/s)</th>
+                            <th>Altura Máx. (m)</th>
+                            <th>Alcance (m)</th>
+                            <th>Tempo Total (s)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpo-tabela-historico">
+                        <!-- Linhas adicionadas via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SEÇÃO EDUCATIVA DE FÍSICA -->
+        <section class="cartao explicacao-fisica">
+            <h2>Conceitos Físicos do Lançamento</h2>
+            <div class="grade-educativa">
+                <article class="item-educativo">
+                    <h3>Movimento Obliquo</h3>
+                    <p>O lançamento do foguete PET é um exemplo clássico de movimento oblíquo. O movimento é decomposto em dois eixos: horizontal (velocidade constante, sem considerar arrasto extra) e vertical (sob ação da aceleração da gravidade $g = 9{,}81\text{ m/s}^2$).</p>
+                </article>
+                <article class="item-educativo">
+                    <h3>Pressão e Propulsão</h3>
+                    <p>A pressão manométrica acumulada na bomba transfere energia potencial elástica para o ar comprimido. Ao liberar o gatilho, a expansão do ar expulsa a água em alta velocidade, impulsionando o foguete de acordo com a 3ª Lei de Newton (Ação e Reação).</p>
+                </article>
+                <article class="item-educativo">
+                    <h3>Ângulo Ideal</h3>
+                    <p>Em um modelo ideal sem resistência do ar, o alcance horizontal máximo é obtido com um ângulo de 45°. Ângulos maiores priorizam a altura máxima, enquanto ângulos menores geram trajetórias mais baixas e curtas.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- AVISO DE SEGURANÇA -->
+        <section class="cartao aviso-seguranca">
+            <h2>🚨 Instruções de Segurança</h2>
+            <p>Garrafas PET sob pressão acumulam alta energia. Siga rigorosamente as normas durante a feira de ciências:</p>
+            <ul>
+                <li>Nunca ultrapasse a pressão limite recomendada pelos organizadores e professores orientadores.</li>
+                <li>Utilize óculos de proteção e mantenha o público a uma distância de segurança adequada.</li>
+                <li>Nunca aponte o foguete para pessoas, animais ou edificações.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <p>Projeto desenvolvido para a Feira Escolar de Física e Programação.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
